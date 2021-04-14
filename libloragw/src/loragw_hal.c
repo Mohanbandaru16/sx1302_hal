@@ -1114,7 +1114,8 @@ int lgw_start(void) {
         }
         if (i == sizeof I2C_PORT_TEMP_SENSOR) {
             printf("ERROR: no temperature sensor found.\n");
-            return LGW_HAL_ERROR;
+			// For RAK2287 this is expected to fail as it has no temperature sensor.
+            // return LGW_HAL_ERROR;
         }
 
         /* Configure ADC AD338R for full duplex (CN490 reference design) */
@@ -1290,7 +1291,8 @@ int lgw_receive(uint8_t max_pkt, struct lgw_pkt_rx_s *pkt_data) {
     res = lgw_get_temperature(&current_temperature);
     if (res != LGW_I2C_SUCCESS) {
         printf("ERROR: failed to get current temperature\n");
-        return LGW_HAL_ERROR;
+		// For RAK2287 this is expected to fail as it has no temperature sensor.
+        // return LGW_HAL_ERROR;
     }
 
     /* Iterate on the RX buffer to get parsed packets */
