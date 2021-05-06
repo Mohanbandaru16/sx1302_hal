@@ -1094,29 +1094,7 @@ int lgw_start(void) {
 
     if (CONTEXT_COM_TYPE == LGW_COM_SPI) {
         /* Find the temperature sensor on the known supported ports */
-        for (i = 0; i < (int)(sizeof I2C_PORT_TEMP_SENSOR); i++) {
-            ts_addr = I2C_PORT_TEMP_SENSOR[i];
-            err = i2c_linuxdev_open(I2C_DEVICE, ts_addr, &ts_fd);
-            if (err != LGW_I2C_SUCCESS) {
-                printf("ERROR: failed to open I2C for temperature sensor on port 0x%02X\n", ts_addr);
-                return LGW_HAL_ERROR;
-            }
-
-            err = stts751_configure(ts_fd, ts_addr);
-            if (err != LGW_I2C_SUCCESS) {
-                printf("INFO: no temperature sensor found on port 0x%02X\n", ts_addr);
-                i2c_linuxdev_close(ts_fd);
-                ts_fd = -1;
-            } else {
-                printf("INFO: found temperature sensor on port 0x%02X\n", ts_addr);
-                break;
-            }
-        }
-        if (i == sizeof I2C_PORT_TEMP_SENSOR) {
-            printf("ERROR: no temperature sensor found.\n");
-			// For RAK2287 this is expected to fail as it has no temperature sensor.
-            // return LGW_HAL_ERROR;
-        }
+        /* Temperature sensor is not supported on RAK2287 */
 
         /* Configure ADC AD338R for full duplex (CN490 reference design) */
         if (CONTEXT_BOARD.full_duplex == true) {
@@ -1223,12 +1201,7 @@ int lgw_stop(void) {
     }
 
     if (CONTEXT_COM_TYPE == LGW_COM_SPI) {
-        DEBUG_MSG("INFO: Closing I2C for temperature sensor\n");
-        x = i2c_linuxdev_close(ts_fd);
-        if (x != 0) {
-            printf("ERROR: failed to close I2C temperature sensor device (err=%i)\n", x);
-            err = LGW_HAL_ERROR;
-        }
+        /* Temperature sensor is not supported on RAK2287 */
 
         if (CONTEXT_BOARD.full_duplex == true) {
             DEBUG_MSG("INFO: Closing I2C for AD5338R\n");
