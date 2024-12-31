@@ -116,7 +116,7 @@ int sx1250_calibrate(uint8_t rf_chain, uint32_t freq_hz) {
         buff[0] = 0xE1;
         buff[1] = 0xE9;
     } else {
-        printf("ERROR: failed to calibrate sx1250 radio, frequency range not supported (%u)\n", freq_hz);
+        printf("ERROR: failed to calibrate sx1250 radio, frequency range not supports (%u)\n", freq_hz);
         return LGW_REG_ERROR;
     }
     err |= sx1250_reg_w(CALIBRATE_IMAGE, buff, 2, rf_chain);
