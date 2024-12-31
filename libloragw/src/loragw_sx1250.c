@@ -92,7 +92,7 @@ int sx1250_reg_r(sx1250_op_code_t op_code, uint8_t *data, uint16_t size, uint8_t
 int sx1250_calibrate(uint8_t rf_chain, uint32_t freq_hz) {
     int err = LGW_REG_SUCCESS;
     uint8_t buff[16];
-
+    printf("Calibrating SX1250 for frequency: %u Hz\n", freq_hz);
     buff[0] = 0x00;
     err |= sx1250_reg_r(GET_STATUS, buff, 1, rf_chain);
 
