@@ -1319,6 +1319,17 @@ int lgw_receive(uint8_t max_pkt, struct lgw_pkt_rx_s *pkt_data) {
         pkt_data[nb_pkt_found].rssic += rssi_temperature_offset;
         pkt_data[nb_pkt_found].rssis += rssi_temperature_offset;
         DEBUG_PRINTF("INFO: RSSI temperature offset applied: %.3f dB (current temperature %.1f C)\n", rssi_temperature_offset, current_temperature);
+            /* Print parsed packet data */
+        printf("ERROR: Packet:- %d\n", nb_pkt_found);
+        printf("ERROR: Frequency:- %u Hz\n", pkt_data[nb_pkt_found].freq_hz);
+        printf("ERROR: RSSI:- %f (channel) %f (signal)\n", pkt_data[nb_pkt_found].rssic, pkt_data[nb_pkt_found].rssis);
+        printf("ERROR: SNR:- %f\n", pkt_data[nb_pkt_found].snr);
+        printf("ERROR:  Size:- %d bytes\n", pkt_data[nb_pkt_found].size);
+        printf("ERROR: Payload:- ");
+        for (int i = 0; i < pkt_data[nb_pkt_found].size; i++) {
+            printf("ERROR: %02X ", pkt_data[nb_pkt_found].payload[i]);
+        }
+        printf(" ERROR :\n");
     }
 
     DEBUG_PRINTF("INFO: nb pkt found:%u left:%u\n", nb_pkt_found, nb_pkt_left);
