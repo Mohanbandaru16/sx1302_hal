@@ -1372,6 +1372,31 @@ int lgw_send(struct lgw_pkt_tx_s * pkt_data) {
 
     CHECK_NULL(pkt_data);
 
+        //mohan added prints
+        /* Print packet data */
+    printf(" ERROR: Packet details:\n");
+    printf(" ERROR: Frequency (Hz): %u\n", pkt_data->freq_hz);
+    printf(" ERROR: TX Mode: %u\n", pkt_data->tx_mode);
+    printf(" ERROR: Count (us): %u\n", pkt_data->count_us);
+    printf(" ERROR: RF Chain: %u\n", pkt_data->rf_chain);
+    printf(" ERROR: RF Power (dBm): %d\n", pkt_data->rf_power);
+    printf(" ERROR: Modulation: %u\n", pkt_data->modulation);
+    printf(" ERROR: Frequency Offset: %d\n", pkt_data->freq_offset);
+    printf(" ERROR: Bandwidth: %u\n", pkt_data->bandwidth);
+    printf(" ERROR: Data Rate: %u\n", pkt_data->datarate);
+    printf(" ERROR: Code Rate: %u\n", pkt_data->coderate);
+    printf(" ERROR: Invert Polarity: %d\n", pkt_data->invert_pol);
+    printf(" ERROR: Frequency Deviation (kHz): %u\n", pkt_data->f_dev);
+    printf(" ERROR: Preamble Length: %u\n", pkt_data->preamble);
+    printf(" ERROR: No CRC: %d\n", pkt_data->no_crc);
+    printf(" ERROR: No Header: %d\n", pkt_data->no_header);
+    printf(" ERROR: Payload Size: %u\n", pkt_data->size);
+    printf(" ERROR: LoRa Payload Data: ");
+        for (uint16_t i = 0; i < pkt_data->size; i++) {
+            printf(" ERROR: %02X ", pkt_data->payload[i]);
+        }
+    printf("ERROR: \n");
+
     /* check input range (segfault prevention) */
     if (pkt_data->rf_chain >= LGW_RF_CHAIN_NB) {
         printf("ERROR: INVALID RF_CHAIN TO SEND PACKETS\n");
